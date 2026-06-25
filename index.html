@@ -9,147 +9,182 @@
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
     background: radial-gradient(circle at top,#2a1a3f,#12091d 55%,#07040b);
     color:white;
     font-family:'Cormorant Garamond',serif;
-    overflow-x:hidden;
+    overflow:hidden;
 }
 
-/* efecto entrada */
-body{
-    animation:fadeIn 2s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-}
-
-/* brillo fondo */
-.brillo{
+/* ===== INTRO ===== */
+.intro{
     position:fixed;
-    width:3px;
-    height:3px;
+    width:100%;
+    height:100vh;
+    background:radial-gradient(circle,#2a1a3f,#0b0612);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.intro-text{
+    font-size:1.3rem;
+    color:#f5e6a0;
+    max-width:90%;
+    opacity:0;
+    transition:opacity 1.2s ease;
+}
+
+.intro-text.show{
+    opacity:1;
+}
+
+.intro button{
+    margin-top:30px;
+    padding:12px 22px;
+    border:none;
+    border-radius:25px;
     background:#ffd700;
-    border-radius:50%;
-    box-shadow:0 0 12px #ffd700;
-    animation:parpadeo 4s infinite;
+    color:#1a1a1a;
+    font-weight:bold;
+    cursor:pointer;
+    display:none;
 }
 
-@keyframes parpadeo{
-    0%,100%{opacity:.2;}
-    50%{opacity:1;}
-}
-
-/* corazones */
-.corazon{
-    position:fixed;
-    bottom:-50px;
-    color:#ff4d88;
-    font-size:20px;
-    animation:subir linear infinite;
-    pointer-events:none;
-}
-
-@keyframes subir{
-    from{transform:translateY(0);opacity:0;}
-    20%{opacity:1;}
-    to{transform:translateY(-120vh);opacity:0;}
-}
-
-/* contenedor */
+/* ===== MAIN ===== */
 .container{
     min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    padding:30px 15px;
     text-align:center;
+    padding:20px;
 }
 
-/* título */
 .titulo{
     font-family:'Cinzel',serif;
     color:#ffd700;
     font-size:2.2rem;
-    text-shadow:0 0 25px rgba(255,215,0,.4);
 }
 
 .subtitulo{
     color:#f7d98c;
     margin-top:10px;
-    font-size:1.1rem;
 }
 
-/* foto */
 .foto{
-    margin-top:25px;
+    margin-top:20px;
     width:100%;
-    max-width:650px;
-    border-radius:25px;
-    border:2px solid rgba(255,215,0,.4);
-    box-shadow:0 0 40px rgba(255,215,0,.25);
-    transition:transform 0.5s ease;
-}
-
-.foto:hover{
-    transform:scale(1.02);
-}
-
-/* mensaje */
-.mensaje{
-    margin-top:25px;
-    max-width:650px;
-    padding:25px;
+    max-width:600px;
     border-radius:20px;
+    border:2px solid rgba(255,215,0,.4);
+    box-shadow:0 0 35px rgba(255,215,0,.25);
+}
 
+.mensaje{
+    margin-top:20px;
+    max-width:600px;
+    padding:20px;
+    border-radius:15px;
     background:rgba(255,255,255,.06);
     backdrop-filter:blur(10px);
-
     color:#ffd700;
-    font-size:1.8rem;
-    line-height:1.5;
-
-    box-shadow:0 0 25px rgba(255,215,0,.15);
-    min-height:120px;
+    font-size:1.7rem;
+    min-height:100px;
 }
 
-/* final */
 .final{
-    margin-top:25px;
+    margin-top:20px;
     color:#f5e6a0;
-    font-size:1.2rem;
 }
 
-/* botón música */
-.btn{
-    margin-top:20px;
+/* ===== FINAL PREGUNTA ===== */
+.question{
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:radial-gradient(circle,#1a0f2b,#05020a);
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.question h1{
+    color:#ffd700;
+    font-size:2rem;
+}
+
+.question p{
+    color:#f5e6a0;
+    margin-top:15px;
+    max-width:80%;
+}
+
+.btns{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+}
+
+.btns button{
     padding:10px 18px;
     border:none;
     border-radius:20px;
-    background:#ffd700;
-    color:#1a1a1a;
     font-weight:bold;
     cursor:pointer;
+}
+
+.si{background:#ffd700;}
+.no{background:#444;color:white;}
+
+.response{
+    margin-top:20px;
+    color:#ffd700;
+    font-size:1.3rem;
+    display:none;
+}
+
+/* efectos */
+.corazon{
+    position:fixed;
+    bottom:-50px;
+    color:#ff4d88;
+    font-size:20px;
+    animation:up linear infinite;
+    pointer-events:none;
+}
+
+@keyframes up{
+    from{transform:translateY(0);opacity:0;}
+    20%{opacity:1;}
+    to{transform:translateY(-120vh);opacity:0;}
 }
 
 </style>
 </head>
 <body>
 
-<!-- música -->
-<audio id="musica" loop>
+<!-- INTRO -->
+<div class="intro">
+    <div id="introText" class="intro-text"></div>
+    <button id="startBtn" onclick="start()">✨ Empezar ✨</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="music" loop>
     <source src="audio.mp3" type="audio/mpeg">
 </audio>
 
+<!-- MAIN -->
 <div class="container">
 
     <div class="titulo">👑 Laura 👑</div>
@@ -157,59 +192,117 @@ body{
 
     <img src="laura.jpg" class="foto">
 
-    <div class="mensaje" id="mensaje"></div>
+    <div class="mensaje" id="msg"></div>
 
     <div class="final">Con amor, Bran ❤️</div>
 
-    <button class="btn" onclick="playMusic()">✨ Tocar para activar música</button>
+</div>
 
+<!-- FINAL QUESTION -->
+<div class="question" id="question">
+    <h1>💛 Laura 💛</h1>
+    <p>¿Quieres ser mi novia?</p>
+
+    <div class="btns">
+        <button class="si" onclick="yes()">Sí 💛</button>
+        <button class="no" onclick="no()">No 💔</button>
+    </div>
+
+    <div class="response" id="response"></div>
 </div>
 
 <script>
 
-/* música */
-function playMusic(){
-    document.getElementById("musica").play();
+/* ===== INTRO SECUENCIA ===== */
+let lines = [
+"Si el plan es hacer las cosas bien, hagámosla juntos.",
+"Deja de huir por miedo a romperte o a romperme.",
+"Te equivocas al decir que debo buscar a otra persona; mis pasos no buscan otro rumbo porque tú eres mi camino.",
+"Elijo seguirte a todas partes el resto de mi vida.",
+"Lo pensaré.",
+"Quédate con la pregunta, siéntela, y dame tu respuesta cuando hable tu corazón."
+];
+
+let intro = document.getElementById("introText");
+let btn = document.getElementById("startBtn");
+
+let i = 0;
+
+function showLines(){
+    if(i < lines.length){
+        intro.classList.remove("show");
+
+        setTimeout(()=>{
+            intro.innerText = lines[i];
+            intro.classList.add("show");
+            i++;
+        },400);
+
+        setTimeout(showLines, 3200);
+    } else {
+        btn.style.display="block";
+        intro.innerText="";
+    }
 }
 
-/* frases animadas */
-let frases = [
+showLines();
+
+/* ===== START ===== */
+function start(){
+    document.querySelector(".intro").style.display="none";
+    document.getElementById("music").play();
+
+    startMainText();
+    hearts();
+}
+
+/* ===== TEXTO PRINCIPAL LENTO ===== */
+let phrases = [
 "Te mentiría si dijera que no pienso en ti...",
 "porque estás en cada parte de mi mente.",
 "y en cada silencio también apareces tú.",
 "Laura... eres mi pensamiento favorito ❤️"
 ];
 
-let i = 0;
-let msg = document.getElementById("mensaje");
+let msg = document.getElementById("msg");
+let j = 0;
 
-function mostrarFrases(){
-    msg.innerHTML = frases[i];
-    i = (i + 1) % frases.length;
+function startMainText(){
+    msg.innerText = phrases[j];
+
+    setInterval(()=>{
+        j++;
+        msg.innerText = phrases[j % phrases.length];
+    }, 5000);
 }
 
-mostrarFrases();
-setInterval(mostrarFrases, 3000);
+/* ===== FINAL QUESTION ===== */
+setTimeout(()=>{
+    document.getElementById("question").style.display="flex";
+}, 25000);
 
-/* corazones */
-for(let i=0;i<35;i++){
-    let c=document.createElement("div");
-    c.className="corazon";
-    c.innerHTML="❤";
-    c.style.left=Math.random()*100+"vw";
-    c.style.animationDuration=(5+Math.random()*8)+"s";
-    c.style.animationDelay=Math.random()*10+"s";
-    document.body.appendChild(c);
+function yes(){
+    document.getElementById("response").style.display="block";
+    document.getElementById("response").innerText =
+    "Sabía que dirías que sí ❤️";
 }
 
-/* brillos */
-for(let i=0;i<80;i++){
-    let b=document.createElement("div");
-    b.className="brillo";
-    b.style.left=Math.random()*100+"vw";
-    b.style.top=Math.random()*100+"vh";
-    b.style.animationDelay=Math.random()*4+"s";
-    document.body.appendChild(b);
+function no(){
+    document.getElementById("response").style.display="block";
+    document.getElementById("response").innerText =
+    "Está bien... pero igual te elijo a ti.";
+}
+
+/* ===== CORAZONES ===== */
+function hearts(){
+    for(let i=0;i<35;i++){
+        let c=document.createElement("div");
+        c.className="corazon";
+        c.innerHTML="❤";
+        c.style.left=Math.random()*100+"vw";
+        c.style.animationDuration=(5+Math.random()*8)+"s";
+        document.body.appendChild(c);
+    }
 }
 
 </script>
