@@ -143,9 +143,7 @@ body{
         👑 Laura 👑
     </div>
 
-    <div class="subtitulo">
-        La princesa de mis pensamientos ✨
-    </div>
+    <div class="mensaje" id="mensaje"></div>
 
     <img src="laura.jpg" class="foto">
 
@@ -193,6 +191,26 @@ for(let i=0;i<80;i++){
 
     document.body.appendChild(b);
 }
+
+<script>
+
+const mensajes = [
+"Te mentiría si te dijera que no estás en cada uno de mis pensamientos.",
+"Desde que llegaste, mis días tienen un brillo diferente.",
+"Tu sonrisa tiene el poder de alegrar cualquier momento.",
+"Gracias por existir, Laura ❤️",
+"Con amor, Bran."
+];
+
+let actual = 0;
+
+function cambiarMensaje(){
+    document.getElementById("mensaje").innerHTML = mensajes[actual];
+    actual = (actual + 1) % mensajes.length;
+}
+
+cambiarMensaje();
+setInterval(cambiarMensaje, 5000);
 
 </script>
 
