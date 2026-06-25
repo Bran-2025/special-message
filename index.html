@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Para Laura ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
@@ -17,23 +16,31 @@
 }
 
 body{
-    background:
-    radial-gradient(circle at top,#2d1b45,#12091d 50%,#090509);
+    background: radial-gradient(circle at top,#2a1a3f,#12091d 55%,#07040b);
     color:white;
-    overflow-x:hidden;
     font-family:'Cormorant Garamond',serif;
+    overflow-x:hidden;
 }
 
-/* BRILLOS */
+/* efecto entrada */
+body{
+    animation:fadeIn 2s ease;
+}
 
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* brillo fondo */
 .brillo{
     position:fixed;
-    width:4px;
-    height:4px;
+    width:3px;
+    height:3px;
     background:#ffd700;
     border-radius:50%;
-    box-shadow:0 0 10px #ffd700;
-    animation:parpadeo 3s infinite;
+    box-shadow:0 0 12px #ffd700;
+    animation:parpadeo 4s infinite;
 }
 
 @keyframes parpadeo{
@@ -41,176 +48,169 @@ body{
     50%{opacity:1;}
 }
 
-/* CORAZONES */
-
+/* corazones */
 .corazon{
     position:fixed;
     bottom:-50px;
     color:#ff4d88;
-    font-size:24px;
+    font-size:20px;
     animation:subir linear infinite;
     pointer-events:none;
 }
 
 @keyframes subir{
-    from{
-        transform:translateY(0);
-        opacity:0;
-    }
-    20%{
-        opacity:1;
-    }
-    to{
-        transform:translateY(-120vh);
-        opacity:0;
-    }
+    from{transform:translateY(0);opacity:0;}
+    20%{opacity:1;}
+    to{transform:translateY(-120vh);opacity:0;}
 }
 
-/* CONTENIDO */
-
+/* contenedor */
 .container{
-    width:100%;
     min-height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     padding:30px 15px;
+    text-align:center;
 }
 
+/* título */
 .titulo{
     font-family:'Cinzel',serif;
     color:#ffd700;
-    font-size:2rem;
-    text-align:center;
-    margin-bottom:20px;
-    text-shadow:0 0 20px rgba(255,215,0,.5);
+    font-size:2.2rem;
+    text-shadow:0 0 25px rgba(255,215,0,.4);
 }
 
 .subtitulo{
-    color:#f8d68f;
-    text-align:center;
-    font-size:1.2rem;
-    margin-bottom:30px;
+    color:#f7d98c;
+    margin-top:10px;
+    font-size:1.1rem;
 }
 
+/* foto */
 .foto{
+    margin-top:25px;
     width:100%;
-    max-width:700px;
+    max-width:650px;
     border-radius:25px;
-    box-shadow:
-    0 0 30px rgba(255,215,0,.3),
-    0 0 60px rgba(255,215,0,.15);
+    border:2px solid rgba(255,215,0,.4);
+    box-shadow:0 0 40px rgba(255,215,0,.25);
+    transition:transform 0.5s ease;
 }
 
+.foto:hover{
+    transform:scale(1.02);
+}
+
+/* mensaje */
 .mensaje{
-    max-width:700px;
     margin-top:25px;
+    max-width:650px;
     padding:25px;
-
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-
     border-radius:20px;
 
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(10px);
+
     color:#ffd700;
-    text-align:center;
+    font-size:1.8rem;
+    line-height:1.5;
 
-    font-size:2rem;
-    line-height:1.6;
-
-    box-shadow:0 0 20px rgba(255,215,0,.15);
+    box-shadow:0 0 25px rgba(255,215,0,.15);
+    min-height:120px;
 }
 
+/* final */
 .final{
-    margin-top:30px;
-    text-align:center;
-    color:#f7e6a2;
-    font-size:1.3rem;
+    margin-top:25px;
+    color:#f5e6a0;
+    font-size:1.2rem;
+}
+
+/* botón música */
+.btn{
+    margin-top:20px;
+    padding:10px 18px;
+    border:none;
+    border-radius:20px;
+    background:#ffd700;
+    color:#1a1a1a;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 </style>
 </head>
 <body>
 
-<audio autoplay loop>
+<!-- música -->
+<audio id="musica" loop>
     <source src="audio.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
 
-    <div class="titulo">
-        👑 Laura 👑
-    </div>
-
-    <div class="mensaje" id="mensaje"></div>
+    <div class="titulo">👑 Laura 👑</div>
+    <div class="subtitulo">La princesa de mis pensamientos ✨</div>
 
     <img src="laura.jpg" class="foto">
 
-    <div class="mensaje">
-        Te mentiría si te dijera que no estás
-        en cada uno de mis pensamientos.
-    </div>
+    <div class="mensaje" id="mensaje"></div>
 
-    <div class="final">
-        Con amor, Bran ❤️
-    </div>
+    <div class="final">Con amor, Bran ❤️</div>
+
+    <button class="btn" onclick="playMusic()">✨ Tocar para activar música</button>
 
 </div>
 
 <script>
 
+/* música */
+function playMusic(){
+    document.getElementById("musica").play();
+}
+
+/* frases animadas */
+let frases = [
+"Te mentiría si dijera que no pienso en ti...",
+"porque estás en cada parte de mi mente.",
+"y en cada silencio también apareces tú.",
+"Laura... eres mi pensamiento favorito ❤️"
+];
+
+let i = 0;
+let msg = document.getElementById("mensaje");
+
+function mostrarFrases(){
+    msg.innerHTML = frases[i];
+    i = (i + 1) % frases.length;
+}
+
+mostrarFrases();
+setInterval(mostrarFrases, 3000);
+
 /* corazones */
-
 for(let i=0;i<35;i++){
-
     let c=document.createElement("div");
-
     c.className="corazon";
     c.innerHTML="❤";
-
     c.style.left=Math.random()*100+"vw";
     c.style.animationDuration=(5+Math.random()*8)+"s";
     c.style.animationDelay=Math.random()*10+"s";
-
     document.body.appendChild(c);
 }
 
 /* brillos */
-
 for(let i=0;i<80;i++){
-
     let b=document.createElement("div");
-
     b.className="brillo";
-
     b.style.left=Math.random()*100+"vw";
     b.style.top=Math.random()*100+"vh";
-
     b.style.animationDelay=Math.random()*4+"s";
-
     document.body.appendChild(b);
 }
-
-<script>
-
-const mensajes = [
-"Te mentiría si te dijera que no estás en cada uno de mis pensamientos.",
-"Desde que llegaste, mis días tienen un brillo diferente.",
-"Tu sonrisa tiene el poder de alegrar cualquier momento.",
-"Gracias por existir, Laura ❤️",
-"Con amor, Bran."
-];
-
-let actual = 0;
-
-function cambiarMensaje(){
-    document.getElementById("mensaje").innerHTML = mensajes[actual];
-    actual = (actual + 1) % mensajes.length;
-}
-
-cambiarMensaje();
-setInterval(cambiarMensaje, 5000);
 
 </script>
 
