@@ -8,22 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
     background: radial-gradient(circle at top,#2a1a3f,#12091d 55%,#07040b);
     color:white;
     font-family:'Cormorant Garamond',serif;
-    overflow:hidden;
+    min-height: 100vh;
 }
 
 /* INTRO */
 .intro{
     position:fixed;
+    top:0;
+    left:0;
     width:100%;
     height:100vh;
     background:radial-gradient(circle,#2a1a3f,#0b0612);
@@ -34,15 +32,15 @@ body{
     text-align:center;
     padding:20px;
     z-index:10;
-    transition:opacity 1.2s ease;
+    transition:opacity 1.2s ease, visibility 1.2s;
 }
 
 .intro-text{
-    font-size:1.3rem;
+    font-size:1.5rem;
     color:#f5e6a0;
     max-width:90%;
     opacity:0;
-    transition:opacity 1s ease;
+    transition:opacity 0.8s ease;
 }
 
 .intro-text.show{opacity:1;}
@@ -57,6 +55,8 @@ body{
     font-weight:bold;
     cursor:pointer;
     display:none;
+    font-size: 1.1rem;
+    box-shadow: 0 0 15px rgba(255,215,0,0.4);
 }
 
 /* MAIN */
@@ -67,24 +67,16 @@ body{
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:20px;
+    padding:40px 20px;
 }
 
-.titulo{
-    font-family:'Cinzel',serif;
-    color:#ffd700;
-    font-size:2.2rem;
-}
-
-.subtitulo{
-    color:#f7d98c;
-    margin-top:10px;
-}
+.titulo{font-family:'Cinzel',serif;color:#ffd700;font-size:2.2rem;}
+.subtitulo{color:#f7d98c;margin-top:10px;}
 
 .foto{
     margin-top:20px;
     width:100%;
-    max-width:600px;
+    max-width:400px;
     border-radius:20px;
     border:2px solid rgba(255,215,0,.4);
     box-shadow:0 0 35px rgba(255,215,0,.25);
@@ -97,63 +89,56 @@ body{
     border-radius:15px;
     background:rgba(255,255,255,.06);
     backdrop-filter:blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color:#ffd700;
     font-size:1.7rem;
     min-height:100px;
+    opacity:0;
     transition:opacity 0.8s ease;
 }
+
+.final{margin-top:20px;color:#f5e6a0;font-size:1.2rem;}
 
 /* QUESTION */
 .question{
     display:none;
     position:fixed;
+    top:0;
+    left:0;
     width:100%;
     height:100vh;
-    background:rgba(5,2,10,0.92);
-    backdrop-filter: blur(12px);
+    background:rgba(5,2,10,0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     flex-direction:column;
     justify-content:center;
     align-items:center;
     text-align:center;
     padding:20px;
-    z-index:9999;
+    z-index:20;
 }
 
-.question h1{
-    color:#ffd700;
-    font-size:2rem;
-}
+.question h1{font-family:'Cinzel',serif; color:#ffd700; margin-bottom:10px;}
+.question p{font-size:1.6rem; color:#fff;}
 
-.question p{
-    margin-top:15px;
-    color:#f5e6a0;
-}
-
-.btns{
-    margin-top:25px;
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
+.btns{margin-top:25px;display:flex;gap:15px;flex-wrap:wrap;justify-content:center;}
 
 .btns button{
-    padding:10px 18px;
+    padding:12px 22px;
     border:none;
     border-radius:20px;
     font-weight:bold;
     cursor:pointer;
+    font-size:1rem;
+    transition: transform 0.2s;
 }
+.btns button:active{transform: scale(0.95);}
 
-.si{background:#ffd700;}
+.si{background:#ffd700; color:#111;}
 .no{background:#444;color:white;}
 .think{background:#ddd;color:#111;}
 
-.response{
-    margin-top:20px;
-    color:#ffd700;
-    display:none;
-}
+.response{margin-top:25px;color:#ffd700;font-size:1.5rem;font-weight:bold;min-height:30px;}
 
 /* HEARTS */
 .corazon{
@@ -161,44 +146,43 @@ body{
     bottom:-50px;
     color:#ff4d88;
     font-size:20px;
-    animation:up linear infinite;
+    animation:up linear forwards;
     pointer-events:none;
+    z-index: 1;
 }
 
 @keyframes up{
-    from{transform:translateY(0);opacity:0;}
-    20%{opacity:1;}
-    to{transform:translateY(-120vh);opacity:0;}
+    0%{transform:translateY(0) scale(0.8);opacity:0;}
+    20%{opacity:0.8;}
+    100%{transform:translateY(-110vh) scale(1.2);opacity:0;}
 }
 
-.fade-out{opacity:0;}
+.fade-out{opacity:0; visibility:hidden;}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div class="intro">
     <div id="introText" class="intro-text"></div>
     <button id="startBtn" class="start-btn" onclick="startAll()">Presiona aquí Lau ❤️</button>
 </div>
 
-<!-- AUDIO -->
-<audio id="music" loop>
+<audio id="music" loop prefetch="auto">
     <source src="audio.mp3" type="audio/mpeg">
 </audio>
 
-<!-- MAIN -->
 <div class="container">
     <div class="titulo">👑 Laura 👑</div>
     <div class="subtitulo">La princesa de mis pensamientos ✨</div>
 
-    <img src="laura.jpg" class="foto">
+    <img src="laura.jpg" class="foto" alt="Laura">
 
     <div class="mensaje" id="msg"></div>
+
+    <div class="final">Con amor, Bran ❤️</div>
 </div>
 
-<!-- QUESTION -->
 <div class="question" id="question">
     <h1>💛 Laura 💛</h1>
     <p>¿Quieres ser mi novia?</p>
@@ -214,7 +198,7 @@ body{
 
 <script>
 
-/* INTRO */
+/* INTRO CORREGIDA */
 let lines = [
 "Si el plan es hacer las cosas bien, hagámosla juntos.",
 "Deja de huir por miedo a romperte o a romperme.",
@@ -234,35 +218,41 @@ function playIntro(){
         setTimeout(()=>{
             intro.innerText = lines[i++];
             intro.classList.add("show");
-
-            setTimeout(playIntro, 2800);
-        },400);
+            
+            // Espera 3.5 segundos fija y luego vuelve a llamar a la función
+            setTimeout(playIntro, 3500);
+        },800);
 
     } else {
-        intro.innerText = "";
-        btn.style.display = "block";
+        intro.classList.remove("show");
+        setTimeout(()=>{
+            intro.style.display = "none";
+            btn.style.display = "block";
+        }, 800);
     }
 }
-playIntro();
+
+// Iniciar intro al cargar la página
+window.onload = () => {
+    playIntro();
+};
 
 /* START */
 function startAll(){
-
     document.querySelector(".intro").classList.add("fade-out");
 
-    setTimeout(()=>{
-        document.querySelector(".intro").style.display="none";
-    },1200);
-
-    let music = document.getElementById("music");
-    music.volume = 0.5;
-    music.play().catch(()=>{});
+    // Intenta reproducir música
+    let audio = document.getElementById("music");
+    audio.volume = 0.6;
+    audio.play().catch(e => console.log("Audio bloqueado por el navegador"));
 
     startMain();
-    hearts();
+    
+    // Generar corazones infinitos cada 300ms
+    setInterval(createHeart, 300);
 }
 
-/* MAIN */
+/* MAIN CORREGIDO */
 let phrases = [
 "Te mentiría si dijera que no pienso en ti...",
 "porque estás en cada parte de mi mente.",
@@ -271,27 +261,24 @@ let phrases = [
 ];
 
 function startMain(){
-
     let msg = document.getElementById("msg");
     let index = 0;
 
     function next(){
         if(index < phrases.length){
-
             msg.style.opacity = 0;
 
             setTimeout(()=>{
                 msg.innerText = phrases[index++];
                 msg.style.opacity = 1;
 
-                setTimeout(next, 2000);
-            },400);
+                setTimeout(next, 3500);
+            },800);
 
         } else {
-
             setTimeout(()=>{
                 document.getElementById("question").style.display = "flex";
-            },1200);
+            }, 2000);
         }
     }
 
@@ -300,32 +287,46 @@ function startMain(){
 
 /* RESPUESTAS */
 function yes(){
-    document.getElementById("response").style.display="block";
-    document.getElementById("response").innerText="Sabía que dirías que sí ❤️";
+    let resp = document.getElementById("response");
+    resp.style.display="block";
+    resp.innerText="Sabía que dirías que sí ❤️ ¡Te amo!";
+    // Multiplica los corazones al decir que sí
+    for(let i=0; i<20; i++) createHeart();
 }
 
 function no(){
-    document.getElementById("response").style.display="block";
-    document.getElementById("response").innerText="Está bien... pero igual te elijo a ti.";
+    let resp = document.getElementById("response");
+    resp.style.display="block";
+    resp.innerText="Está bien... pero igual te elijo a ti. ✨";
 }
 
 function think(){
-    document.getElementById("response").style.display="block";
-    document.getElementById("response").innerText="Quédate con la pregunta 🤍";
+    let resp = document.getElementById("response");
+    resp.style.display="block";
+    resp.innerText="Quédate con la pregunta... esperaré lo necesario 🤍";
 }
 
-/* CORAZONES */
-function hearts(){
-    for(let i=0;i<35;i++){
-        let c=document.createElement("div");
-        c.className="corazon";
-        c.innerHTML="❤";
-        c.style.left=Math.random()*100+"vw";
-        c.style.animationDuration=(5+Math.random()*8)+"s";
-        document.body.appendChild(c);
-    }
-}
+/* CORAZONES INFINITOS Y LIMPIOS */
+function createHeart(){
+    let c = document.createElement("div");
+    c.className = "corazon";
+    c.innerHTML = "❤";
+    c.style.left = Math.random() * 100 + "vw";
+    
+    // Tamaños y velocidades aleatorias para verse más natural
+    let duration = 4 + Math.random() * 5;
+    let size = 12 + Math.random() * 15;
+    
+    c.style.animationDuration = duration + "s";
+    c.style.fontSize = size + "px";
+    
+    document.body.appendChild(c);
 
+    // IMPORTANTE: Eliminar el elemento cuando termine la animación para no congelar el celular/PC
+    setTimeout(()=>{
+        c.remove();
+    }, duration * 1000);
+}
 </script>
 
 </body>
