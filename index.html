@@ -37,15 +37,15 @@ body{
     color:#f5e6a0;
     max-width:90%;
     opacity:0;
-    transition:opacity 1.2s ease;
+    transition:opacity 1s ease;
 }
 
 .intro-text.show{
     opacity:1;
 }
 
-.intro button{
-    margin-top:30px;
+.start-btn{
+    margin-top:25px;
     padding:12px 22px;
     border:none;
     border-radius:25px;
@@ -104,7 +104,7 @@ body{
     color:#f5e6a0;
 }
 
-/* ===== FINAL PREGUNTA ===== */
+/* ===== PREGUNTA FINAL ===== */
 .question{
     display:none;
     position:fixed;
@@ -120,13 +120,11 @@ body{
 
 .question h1{
     color:#ffd700;
-    font-size:2rem;
 }
 
 .question p{
-    color:#f5e6a0;
     margin-top:15px;
-    max-width:80%;
+    color:#f5e6a0;
 }
 
 .btns{
@@ -149,11 +147,10 @@ body{
 .response{
     margin-top:20px;
     color:#ffd700;
-    font-size:1.3rem;
     display:none;
 }
 
-/* efectos */
+/* corazones */
 .corazon{
     position:fixed;
     bottom:-50px;
@@ -176,7 +173,7 @@ body{
 <!-- INTRO -->
 <div class="intro">
     <div id="introText" class="intro-text"></div>
-    <button id="startBtn" onclick="start()">✨ Empezar ✨</button>
+    <button id="startBtn" class="start-btn" onclick="startAll()">Presiona aquí Lau 💛</button>
 </div>
 
 <!-- AUDIO -->
@@ -198,7 +195,7 @@ body{
 
 </div>
 
-<!-- FINAL QUESTION -->
+<!-- FINAL -->
 <div class="question" id="question">
     <h1>💛 Laura 💛</h1>
     <p>¿Quieres ser mi novia?</p>
@@ -228,7 +225,7 @@ let btn = document.getElementById("startBtn");
 
 let i = 0;
 
-function showLines(){
+function playIntro(){
     if(i < lines.length){
         intro.classList.remove("show");
 
@@ -238,25 +235,32 @@ function showLines(){
             i++;
         },400);
 
-        setTimeout(showLines, 3200);
+        setTimeout(playIntro, 3200);
+
     } else {
-        btn.style.display="block";
         intro.innerText="";
+        btn.style.display="block";
     }
 }
 
-showLines();
+playIntro();
 
-/* ===== START ===== */
-function start(){
+/* ===== INICIO TOTAL ===== */
+function startAll(){
+
     document.querySelector(".intro").style.display="none";
+
     document.getElementById("music").play();
 
-    startMainText();
+    startMain();
     hearts();
+
+    setTimeout(()=>{
+        document.getElementById("question").style.display="flex";
+    }, 25000);
 }
 
-/* ===== TEXTO PRINCIPAL LENTO ===== */
+/* ===== TEXTO PRINCIPAL ===== */
 let phrases = [
 "Te mentiría si dijera que no pienso en ti...",
 "porque estás en cada parte de mi mente.",
@@ -267,7 +271,7 @@ let phrases = [
 let msg = document.getElementById("msg");
 let j = 0;
 
-function startMainText(){
+function startMain(){
     msg.innerText = phrases[j];
 
     setInterval(()=>{
@@ -276,21 +280,15 @@ function startMainText(){
     }, 5000);
 }
 
-/* ===== FINAL QUESTION ===== */
-setTimeout(()=>{
-    document.getElementById("question").style.display="flex";
-}, 25000);
-
+/* ===== RESPUESTAS ===== */
 function yes(){
     document.getElementById("response").style.display="block";
-    document.getElementById("response").innerText =
-    "Sabía que dirías que sí ❤️";
+    document.getElementById("response").innerText="Sabía que dirías que sí ❤️";
 }
 
 function no(){
     document.getElementById("response").style.display="block";
-    document.getElementById("response").innerText =
-    "Está bien... pero igual te elijo a ti.";
+    document.getElementById("response").innerText="Está bien... pero igual te elijo a ti.";
 }
 
 /* ===== CORAZONES ===== */
