@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Laura ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Georgia', serif;
+}
+
+body{
+    background:#000;
+    overflow:hidden;
+    height:100vh;
+}
+
+#inicio{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#0d1b3d,#1b2550,#38265d);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    z-index:1000;
+}
+
+#inicio h1{
+    font-size:3rem;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+#inicio p{
+    font-size:1.2rem;
+    text-align:center;
+    max-width:500px;
+    margin-bottom:30px;
+}
+
+#btnComenzar{
+    padding:18px 40px;
+    border:none;
+    border-radius:50px;
+    font-size:1.2rem;
+    cursor:pointer;
+    background:#ffd700;
+    color:#222;
+    font-weight:bold;
+}
+
+#contenido{
+    display:none;
+    position:relative;
+    height:100vh;
+}
+
+#fondo{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:brightness(.45);
+}
+
+.capa{
+    position:relative;
+    z-index:2;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    text-align:center;
+    color:white;
+}
+
+#texto{
+    max-width:900px;
+    font-size:1.3rem;
+    line-height:1.8;
+    text-shadow:0 0 10px rgba(0,0,0,.7);
+}
+
+#pregunta{
+    display:none;
+    margin-top:30px;
+}
+
+#pregunta h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.btn{
+    padding:15px 30px;
+    margin:10px;
+    border:none;
+    border-radius:50px;
+    font-size:1.1rem;
+    cursor:pointer;
+}
+
+.si{
+    background:#ff4f81;
+    color:white;
+}
+
+.no{
+    background:white;
+    color:#333;
+}
+
+.corazon{
+    position:absolute;
+    color:#ff8ab5;
+    animation:subir linear forwards;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div id="inicio">
+    <h1>👑 Laura 👑</h1>
+
+    <p>
+        Hay cosas que solo se dicen una vez en la vida...
+    </p>
+
+    <button id="btnComenzar">
+        ❤️ Toca aquí, Laura ❤️
+    </button>
+</div>
+
+<div id="contenido">
+
+    <img src="laura.jpg" id="fondo">
+
+    <div class="capa">
+
+        <div id="texto"></div>
+
+        <div id="pregunta">
+            <h1>❤️ ¿Quieres ser mi novia? ❤️</h1>
+
+            <button class="btn si" onclick="acepto()">
+                Sí, quiero 💖
+            </button>
+
+            <button class="btn no" id="no">
+                Necesito pensarlo 🌹
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<audio id="musica" src="audio.mp3"></audio>
+
+<script>
+
+const mensaje = `
+
+Te mentiría si te dijera que no estás en cada uno de mis pensamientos.
+
+Estás clavada en mi corazón, y sé que yo estoy en el tuyo.
+
+Si el plan es hacer las cosas bien, hagámoslas juntos.
+
+Esta es nuestra oportunidad.
+
+Lo que tú y yo compartimos no pasa dos veces en la vida.
+
+Después de tanto tiempo, nuestro reencuentro solo puede ser el destino.
+
+Quiero algo real contigo.
+
+Un amor sin filtros.
+
+Sin temores al qué dirán.
+
+Y sin reservas.
+
+Deja de huir por miedo a romperte o a romperme.
+
+Mis pasos no buscan otro rumbo porque tú eres mi camino.
+
+Elijo seguirte a todas partes.
+
+Mi amor por ti cruza cualquier distancia.
+
+La misma que voy a acortar para abrazarte.
+
+`;
+
+let i=0;
+
+document.getElementById("btnComenzar").onclick=()=>{
+
+    document.getElementById("inicio").style.display="none";
+    document.getElementById("contenido").style.display="block";
+
+    document.getElementById("musica").play();
+
+    escribir();
+}
+
+function escribir(){
+
+    if(i < mensaje.length){
+
+        document.getElementById("texto").innerHTML += mensaje.charAt(i);
+
+        i++;
+
+        setTimeout(escribir,40);
+
+    }else{
+
+        setTimeout(()=>{
+            document.getElementById("pregunta").style.display="block";
+        },2000);
+
+    }
+}
+
+function acepto(){
+
+    document.body.innerHTML=`
+
+    <div style="
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    background:linear-gradient(135deg,#ff7eb3,#ff4f81);
+    color:white;
+    padding:20px;
+    ">
+
+    <h1 style="font-size:4rem;">💖</h1>
+
+    <h1>
+    Gracias por regalarme la oportunidad
+    de escribir nuestra historia.
+    </h1>
+
+    <h2 style="margin-top:20px;">
+    Con amor, Bran ❤️
+    </h2>
+
+    </div>
+    `;
+}
+
+const btnNo = document.getElementById("no");
+
+btnNo.addEventListener("mouseover",()=>{
+
+    btnNo.style.position="absolute";
+
+    btnNo.style.left=
+    Math.random()*(window.innerWidth-150)+"px";
+
+    btnNo.style.top=
+    Math.random()*(window.innerHeight-80)+"px";
+
+});
+
+function corazones(){
+
+    const c=document.createElement("div");
+
+    c.className="corazon";
+
+    c.innerHTML="❤️";
+
+    c.style.left=Math.random()*100+"vw";
+
+    c.style.fontSize=(20+Math.random()*20)+"px";
+
+    c.style.animationDuration=(4+Math.random()*4)+"s";
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(),8000);
+}
+
+setInterval(corazones,300);
+
+</script>
+
+</body>
+</html>
