@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para Laura ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://googleapis.com" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -131,12 +131,34 @@ body{
     cursor:pointer;
     font-size:1rem;
     transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 .btns button:active{transform: scale(0.95);}
+
+/* Color unificado para todos los corazones dentro de los botones */
+.btns button span {
+    color: #ff4d88;
+}
 
 .si{background:#ffd700; color:#111;}
 .no{background:#444;color:white;}
 .think{background:#ddd;color:#111;}
+
+/* Animación de latido exclusivo para el botón SÍ */
+.latido-btn {
+    animation: latido 1.2s infinite ease-in-out;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes latido {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.08); }
+    40% { transform: scale(0.98); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 
 .response{margin-top:25px;color:#ffd700;font-size:1.5rem;font-weight:bold;min-height:30px;}
 
@@ -188,9 +210,9 @@ body{
     <p>¿Quieres ser mi novia?</p>
 
     <div class="btns">
-        <button class="si" onclick="yes()">Sí ❤️</button>
-        <button class="no" onclick="no()">No</button>
-        <button class="think" onclick="think()">Lo pensaré 🤍</button>
+        <button class="si latido-btn" onclick="yes()">Sí <span>❤️</span></button>
+        <button class="no" onclick="no()">No <span>❤️</span></button>
+        <button class="think" onclick="think()">Lo pensaré <span>❤️</span></button>
     </div>
 
     <div class="response" id="response"></div>
@@ -218,8 +240,6 @@ function playIntro(){
         setTimeout(()=>{
             intro.innerText = lines[i++];
             intro.classList.add("show");
-            
-            // Espera 3.5 segundos fija y luego vuelve a llamar a la función
             setTimeout(playIntro, 3500);
         },800);
 
@@ -232,7 +252,6 @@ function playIntro(){
     }
 }
 
-// Iniciar intro al cargar la página
 window.onload = () => {
     playIntro();
 };
@@ -241,14 +260,11 @@ window.onload = () => {
 function startAll(){
     document.querySelector(".intro").classList.add("fade-out");
 
-    // Intenta reproducir música
     let audio = document.getElementById("music");
     audio.volume = 0.6;
     audio.play().catch(e => console.log("Audio bloqueado por el navegador"));
 
     startMain();
-    
-    // Generar corazones infinitos cada 300ms
     setInterval(createHeart, 300);
 }
 
@@ -290,7 +306,6 @@ function yes(){
     let resp = document.getElementById("response");
     resp.style.display="block";
     resp.innerText="Sabía que dirías que sí ❤️ ¡Te amo!";
-    // Multiplica los corazones al decir que sí
     for(let i=0; i<20; i++) createHeart();
 }
 
@@ -313,7 +328,6 @@ function createHeart(){
     c.innerHTML = "❤";
     c.style.left = Math.random() * 100 + "vw";
     
-    // Tamaños y velocidades aleatorias para verse más natural
     let duration = 4 + Math.random() * 5;
     let size = 12 + Math.random() * 15;
     
@@ -322,7 +336,6 @@ function createHeart(){
     
     document.body.appendChild(c);
 
-    // IMPORTANTE: Eliminar el elemento cuando termine la animación para no congelar el celular/PC
     setTimeout(()=>{
         c.remove();
     }, duration * 1000);
