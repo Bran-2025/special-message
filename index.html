@@ -5,17 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para Laura ❤️</title>
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
     background: radial-gradient(circle at top,#2a1a3f,#12091d 55%,#07040b);
@@ -36,6 +34,8 @@ body{
     align-items:center;
     text-align:center;
     padding:20px;
+    transition:opacity 1.2s ease;
+    z-index:10;
 }
 
 .intro-text{
@@ -103,6 +103,8 @@ body{
     color:#ffd700;
     font-size:1.7rem;
     min-height:100px;
+    opacity:1;
+    transition:opacity 0.8s ease;
 }
 
 .final{
@@ -122,6 +124,7 @@ body{
     align-items:center;
     text-align:center;
     padding:20px;
+    z-index:20;
 }
 
 .question h1{
@@ -137,6 +140,8 @@ body{
     margin-top:25px;
     display:flex;
     gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .btns button{
@@ -149,14 +154,20 @@ body{
 
 .si{background:#ffd700;}
 .no{background:#444;color:white;}
+.think{background:#ddd;color:#111;}
 
 .response{
     margin-top:20px;
     color:#ffd700;
+    font-size:1.2rem;
     display:none;
 }
 
-/* corazones */
+/* ===== EFECTOS ===== */
+.fade-out{
+    opacity:0;
+}
+
 .corazon{
     position:fixed;
     bottom:-50px;
@@ -179,7 +190,7 @@ body{
 <!-- INTRO -->
 <div class="intro">
     <div id="introText" class="intro-text"></div>
-    <button id="startBtn" class="start-btn" onclick="startAll()">Presiona aquí Lau 💛</button>
+    <button id="startBtn" class="start-btn" onclick="startAll()">Presiona aquí Lau ❤️</button>
 </div>
 
 <!-- AUDIO -->
@@ -201,14 +212,15 @@ body{
 
 </div>
 
-<!-- FINAL -->
+<!-- FINAL QUESTION -->
 <div class="question" id="question">
     <h1>💛 Laura 💛</h1>
     <p>¿Quieres ser mi novia?</p>
 
     <div class="btns">
-        <button class="si" onclick="yes()">Sí 💛</button>
-        <button class="no" onclick="no()">No 💔</button>
+        <button class="si" onclick="yes()">Sí ❤️</button>
+        <button class="no" onclick="no()">No</button>
+        <button class="think" onclick="think()">Lo pensaré 🤍</button>
     </div>
 
     <div class="response" id="response"></div>
@@ -216,14 +228,13 @@ body{
 
 <script>
 
-/* ===== INTRO SECUENCIA ===== */
+/* ===== INTRO ===== */
 let lines = [
 "Si el plan es hacer las cosas bien, hagámosla juntos.",
 "Deja de huir por miedo a romperte o a romperme.",
-"Te equivocas al decir que debo buscar a otra persona; mis pasos no buscan otro rumbo porque tú eres mi camino.",
-"Elijo seguirte a todas partes el resto de mi vida.",
-"Lo pensaré.",
-"Quédate con la pregunta, siéntela, y dame tu respuesta cuando hable tu corazón."
+"Te equivocas al decir que debo buscar a otra persona.",
+"Mis pasos no buscan otro rumbo porque tú eres mi camino.",
+"Elijo seguirte a todas partes el resto de mi vida."
 ];
 
 let intro = document.getElementById("introText");
@@ -232,29 +243,35 @@ let btn = document.getElementById("startBtn");
 let i = 0;
 
 function playIntro(){
+
     if(i < lines.length){
+
         intro.classList.remove("show");
 
         setTimeout(()=>{
             intro.innerText = lines[i];
             intro.classList.add("show");
             i++;
-        },400);
+        },500);
 
-        setTimeout(playIntro, 3200);
+        setTimeout(playIntro, 4200);
 
     } else {
-        intro.innerText="";
-        btn.style.display="block";
+        intro.innerText = "";
+        btn.style.display = "block";
     }
 }
 
 playIntro();
 
-/* ===== INICIO TOTAL ===== */
+/* ===== INICIO ===== */
 function startAll(){
 
-    document.querySelector(".intro").style.display="none";
+    document.querySelector(".intro").classList.add("fade-out");
+
+    setTimeout(()=>{
+        document.querySelector(".intro").style.display="none";
+    },1200);
 
     document.getElementById("music").play();
 
@@ -266,7 +283,7 @@ function startAll(){
     }, 25000);
 }
 
-/* ===== TEXTO PRINCIPAL ===== */
+/* ===== MENSAJES PRINCIPALES ===== */
 let phrases = [
 "Te mentiría si dijera que no pienso en ti...",
 "porque estás en cada parte de mi mente.",
@@ -278,12 +295,19 @@ let msg = document.getElementById("msg");
 let j = 0;
 
 function startMain(){
-    msg.innerText = phrases[j];
 
-    setInterval(()=>{
-        j++;
-        msg.innerText = phrases[j % phrases.length];
-    }, 5000);
+    function show(){
+        msg.style.opacity = 0;
+
+        setTimeout(()=>{
+            msg.innerText = phrases[j % phrases.length];
+            msg.style.opacity = 1;
+            j++;
+        },500);
+    }
+
+    show();
+    setInterval(show, 4500);
 }
 
 /* ===== RESPUESTAS ===== */
@@ -295,6 +319,11 @@ function yes(){
 function no(){
     document.getElementById("response").style.display="block";
     document.getElementById("response").innerText="Está bien... pero igual te elijo a ti.";
+}
+
+function think(){
+    document.getElementById("response").style.display="block";
+    document.getElementById("response").innerText="Quédate con la pregunta, siéntela, y dame tu respuesta cuando hable tu corazón 🤍";
 }
 
 /* ===== CORAZONES ===== */
