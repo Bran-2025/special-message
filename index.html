@@ -315,25 +315,40 @@ let j = 0;
 
 function startMain(){
 
-    function show(){
+    let index = 0;
+
+    function showText(){
         msg.style.opacity = 0;
 
         setTimeout(()=>{
-            msg.innerText = phrases[j % phrases.length];
+            msg.innerText = phrases[index];
             msg.style.opacity = 1;
-            j++;
+            index++;
+
+            // 🔥 cuando termina el array, mostramos pregunta
+            if(index >= phrases.length){
+                setTimeout(()=>{
+                    document.getElementById("question").style.display = "flex";
+                }, 2500);
+                return;
+            }
+
         },500);
     }
 
-    show();
-    setInterval(show, 4500);
+    showText();
 
-    /* 🔥 PREGUNTA FINAL A LOS 10 SEGUNDOS */
-    setTimeout(()=>{
-        document.getElementById("question").style.display="flex";
-    }, 10000);
+    let interval = setInterval(()=>{
+        showText();
+
+        if(index >= phrases.length){
+            clearInterval(interval);
+        }
+
+    }, 4500);
+
+    hearts();
 }
-
 /* ===== RESPUESTAS ===== */
 function yes(){
     document.getElementById("response").style.display="block";
